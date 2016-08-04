@@ -26,6 +26,8 @@ RUN apt-get update && apt-get install -y \
 	nginx \
 	supervisor \
 	sqlite3 \
+	vim-nox \
+	emacs24-nox emacs24-el \
   && rm -rf /var/lib/apt/lists/*
 
 # install uwsgi now because it takes a little while
