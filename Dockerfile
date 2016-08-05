@@ -34,6 +34,10 @@ RUN apt-get update && apt-get install -y \
 # Make sure `env python` points to python3 in a login shell
 RUN echo "alias python='python3'" >> /root/.bashrc
 
+# Specify py3 lib path, pip3 will install libs into the dir.
+# XXX: It's lame to hardcode 'python3.4'
+RUN echo 'export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.4/dist-packages' >> /root/.bashrc
+
 # install uwsgi now because it takes a little while
 RUN pip3 install uwsgi
 
