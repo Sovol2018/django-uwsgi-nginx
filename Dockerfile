@@ -31,6 +31,9 @@ RUN apt-get update && apt-get install -y \
 	curl telnet dnsutils \
   && rm -rf /var/lib/apt/lists/*
 
+# Make sure `env python` points to python3 in a login shell
+RUN echo "alias python='python3'" >> /root/.bashrc
+
 # install uwsgi now because it takes a little while
 RUN pip3 install uwsgi
 
