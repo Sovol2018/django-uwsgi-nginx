@@ -28,6 +28,7 @@ RUN apt-get update && apt-get install -y \
 	sqlite3 \
 	vim-nox \
 	emacs24-nox emacs24-el \
+	curl telnet dnsutils \
   && rm -rf /var/lib/apt/lists/*
 
 # install uwsgi now because it takes a little while
