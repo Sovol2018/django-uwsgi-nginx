@@ -29,6 +29,8 @@ RUN apt-get update && apt-get install -y \
 	vim-nox \
 	emacs24-nox emacs24-el \
 	curl telnet dnsutils \
+	libtiff5-dev libjpeg8-dev zlib1g-dev \
+	libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk \
   && rm -rf /var/lib/apt/lists/*
 
 # Make sure `env python` points to python3 in a login shell
