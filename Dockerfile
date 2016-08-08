@@ -40,6 +40,11 @@ RUN echo "alias python='python3'" >> /root/.bashrc
 # XXX: It's lame to hardcode 'python3.4'
 RUN echo 'export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python3.4/dist-packages' >> /root/.bashrc
 
+RUN mkdir /root/bin
+RUN echo 'export PATH=$PATH:/root/bin' >> /root/.bashrc
+COPY bin/* /root/bin/
+RUN chmod +x /root/bin/*
+
 # install uwsgi now because it takes a little while
 RUN pip3 install uwsgi
 
