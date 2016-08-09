@@ -53,6 +53,15 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 COPY nginx-app.conf /etc/nginx/sites-available/default
 COPY supervisor-app.conf /etc/supervisor/conf.d/
 
+# Create Self-signed SSL cert
+RUN mkdir /etc/nginx/ssl
+RUN openssl genrsa -out key.pem 2048
+RUN openssl req -new -key key.pem -subj '/C=JP/ST=Tokyo/L=Tokyo-to/O=Interlink/OU=interlink/CN=sovolo.local' -out csr.pem
+RUN openssl x509 -days 3650 -req -signkey key.pem < csr.pem > cert.pem
+RUN mv key.pem /etc/nginx/ssl/
+RUN mv cert.pem /etc/nginx/ssl/
+RUN rm csr.pem
+
 # add (the rest of) our code
 COPY . /home/docker/code/
 
@@ -61,5 +70,5 @@ COPY . /home/docker/code/
 # RUN django-admin.py startproject website /home/docker/code/app/ 
 
 
-EXPOSE 80 8000
+EXPOSE 80 443 8000
 CMD ["supervisord", "-n"]
