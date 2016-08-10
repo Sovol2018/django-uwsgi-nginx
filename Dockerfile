@@ -73,22 +73,22 @@ COPY . /home/docker/code/
 # RUN django-admin.py startproject website /home/docker/code/app/ 
 
 
-EXPOSE 80 443 8000
-CMD ["supervisord", "-n"]
-
-
 USER postgres
 
 ARG PG_PASS
 ENV PG_PASS ${PG_PASS:-pass}
 
-RUN /etc/init.d/postgresql start &&\
-    psql --command "CREATE USER sovolo_admin WITH SUPERUSER PASSWORD '${PG_PASS}';" &&\
-    psql --command "CREATE DATABASE sovolo WITH OWNER sovolo_admin TEMPLATE template0 ENCODING 'UTF8';" &&\
-    echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.conf &&\
+RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.conf &&\
     echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf
 
-EXPOSE 5432
-VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
+RUN /etc/init.d/postgresql start &&\
+    psql --command "CREATE USER sovolo_admin WITH SUPERUSER PASSWORD '${PG_PASS}';" &&\
+    psql --command "CREATE DATABASE sovolo WITH OWNER sovolo_admin TEMPLATE template0 ENCODING 'UTF8';"
 
-CMD ["/usr/lib/postgresql/9.3/bin/postgres", "-D", "/var/lib/postgresql/9.3/main", "-c", "config_file=/etc/postgresql/9.3/main/postgresql.conf"]
+#VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
+#
+#CMD ["/usr/lib/postgresql/9.3/bin/postgres", "-D", "/var/lib/postgresql/9.3/main", "-c", "config_file=/etc/postgresql/9.3/main/postgresql.conf"]
+
+USER root
+EXPOSE 80 443 5432 8000
+CMD ["supervisord", "-n"]
