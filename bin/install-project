@@ -3,11 +3,4 @@
 # Install Python packages
 pip3 install -r /home/docker/code/app/requirements.txt
 
-# Install static js/css/fonts files
-(
-	cd /home/docker/code/app
-	npm install
-	gulp bower
-)
-
 supervisorctl restart app-uwsgi
