@@ -29,6 +29,8 @@ RUN apt-get update && apt-get install -y \
 	libpq-dev \
 	postgresql-9.3 \
 	postgresql-contrib-9.3 \
+	nodejs \
+	npm \
 	vim-nox \
 	emacs24-nox emacs24-el \
 	curl telnet dnsutils \
@@ -36,8 +38,15 @@ RUN apt-get update && apt-get install -y \
 	libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk \
   && rm -rf /var/lib/apt/lists/*
 
+#
+RUN ln -s /usr/bin/nodejs /usr/bin/node
+
 # Make sure `env python` points to python3 in a login shell
 RUN echo "alias python='python3'" >> /root/.bashrc
+
+RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+
+RUN npm install -g gulp-cli
 
 # Specify py3 lib path, pip3 will install libs into the dir.
 # XXX: It's lame to hardcode 'python3.4'
