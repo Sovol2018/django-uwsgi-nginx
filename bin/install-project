@@ -1,6 +1,4 @@
 #!/bin/sh
 
-# Install Python packages
-pip3 install -r /home/docker/code/app/requirements.txt
-
-supervisorctl restart app-uwsgi
+pip3 install -r /home/docker/code/app/requirements.txt \
+	&& supervisorctl restart app-uwsgi
