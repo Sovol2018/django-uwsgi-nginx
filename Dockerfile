@@ -66,7 +66,8 @@ RUN mv cert.pem /etc/nginx/ssl/
 RUN rm csr.pem
 
 # add (the rest of) our code
-COPY . /home/docker/code/
+COPY uwsgi.ini /home/docker/
+COPY uwsgi_params /home/docker/
 
 # install django, normally you would remove this step because your project would already
 # be installed in the code/app/ directory
