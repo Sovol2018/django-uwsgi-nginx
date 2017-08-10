@@ -19,6 +19,7 @@ MAINTAINER Dockerfiles
 # Install required packages and remove the apt packages cache when done.
 
 RUN apt-get update && apt-get install -y \
+	gettext \
 	git \
 	python3 \
 	python3-dev \
